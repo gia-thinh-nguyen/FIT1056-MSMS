@@ -101,6 +101,7 @@ def remove_student(student_id):
     """
     # Use a list comprehension to filter out the student with the matching ID.
     app_data['students'] = [s for s in app_data['students'] if s['id'] != student_id]
+    print(f"Student {student_id} removed.")
 
 def check_in(student_id, course_id, timestamp=None):
     """Records a student's attendance for a course.
@@ -149,3 +150,59 @@ def print_student_card(student_id):
         print(f"Printed student card to {filename}.")
     else:
         print(f"Error: Could not print card, student {student_id} not found.")
+
+
+# --- Main Application Loop ---
+def main():
+    """Main function to run the MSMS application."""
+    load_data() # Load all data from file at startup.
+
+    while True:
+        print("\n===== MSMS v2 (Persistent) =====")
+        print("1. Check-in Student")
+        print("2. Print Student Card")
+        print("3. Update Teacher Info")
+        print("4. Remove Student")
+        print("q. Quit and Save")
+        
+        choice = input("Enter your choice: ")
+        
+        made_change = False # A flag to track if we need to save
+        if choice == '1':
+            # Get student_id and course_id from user, then call check_in().
+            student_id = int(input("Enter student ID: "))
+            course_id = int(input("Enter course ID: "))
+            check_in(student_id, course_id)
+            made_change = True
+        elif choice == '2':
+            # Get student_id, then call print_student_card().
+            student_id = int(input("Enter student ID: "))
+            print_student_card(student_id)
+            pass # No change made, so no save needed
+        elif choice == '3':
+            # TODO: Get teacher_id and new details, then call update_teacher().
+            # Example: update_teacher(1, speciality="Advanced Piano")
+            teacher_id = int(input("Enter teacher ID: "))
+            name = input("Enter teacher's name: ")
+            speciality = input("Enter teacher's speciality: ")
+            update_teacher(teacher_id, name=name, speciality=speciality)
+            made_change = True
+        elif choice == '4':
+            # Get student_id, then call remove_student().
+            student_id = int(input("Enter student ID: "))
+            remove_student(student_id)
+            made_change = True
+        elif choice.lower() == 'q':
+            print("Saving final changes and exiting.")
+            break
+        else:
+            print("Invalid choice.")
+            
+        if made_change:
+            save_data() # Save the data immediately after any change.
+
+    save_data() # One final save on exit.
+
+# --- Program Start ---
+if __name__ == "__main__":
+    main()
