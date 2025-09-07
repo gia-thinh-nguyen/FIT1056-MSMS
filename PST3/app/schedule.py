@@ -78,6 +78,8 @@ class ScheduleManager:
         
         # This line will now work without causing an AttributeError.
         self.attendance_log.append(check_in_record)
+        # Increase next_student_id to ensure unique IDs.
+        self.next_student_id += 1
         self._save_data() # This will now correctly save the attendance log.
         print(f"Success: Student {student.name} checked into {course.name}.")
         return True
