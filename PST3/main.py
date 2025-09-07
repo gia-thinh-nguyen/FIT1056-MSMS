@@ -1,5 +1,9 @@
 # main.py - The View Layer
 from app.schedule import ScheduleManager
+import os
+
+current_directory = os.path.dirname(__file__)
+os.chdir(current_directory)
 
 def front_desk_daily_roster(manager, day):
     """Displays a pretty table of all lessons on a given day.
