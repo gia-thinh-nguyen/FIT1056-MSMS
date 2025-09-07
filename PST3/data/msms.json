@@ -91,5 +91,8 @@
             "course_id": 102,
             "timestamp": "2025-07-14T16:02:45.654321"
         }
-    ]
+    ],
+    "next_student_id": 3,
+    "next_teacher_id": 3,
+    "next_course_id": 104
 }
