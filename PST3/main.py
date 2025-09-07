@@ -17,8 +17,7 @@ def front_desk_daily_roster(manager, day):
     for course in manager.courses:
         for lesson in course.lessons:
             if lesson['day'].lower() == day.lower():
-                teacher = manager.find_teacher_by_id(course.teacher_id)
-                print(f"Course: {course.name}, Teacher: {teacher.name}, Day: {lesson['day']}, Time: {lesson['start_time']}, Room: {lesson['room']}")
+                print(f"Lesson of course: {course.name},Day: {lesson['day']}, Time: {lesson['start_time']}, Room: {lesson['room']}")
 
     
 

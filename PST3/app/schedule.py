@@ -24,11 +24,29 @@ class ScheduleManager:
             with open(self.data_path, 'r') as f:
                 data = json.load(f)
                 # Load students
-                self.students = [StudentUser(**student) for student in data.get("students", [])]
+                for student_data in data.get("students", []):
+                    student_id = student_data.get("id")
+                    name = student_data.get("name")
+                    student = StudentUser(student_id, name)
+                    student.enrolled_course_ids = student_data.get("enrolled_course_ids", [])
+                    self.students.append(student)
                 # Load teachers
-                self.teachers = [TeacherUser(**teacher) for teacher in data.get("teachers", [])]
+                for teacher_data in data.get("teachers", []):
+                    teacher_id = teacher_data.get("id")
+                    name = teacher_data.get("name")
+                    speciality = teacher_data.get("speciality")
+                    teacher = TeacherUser(teacher_id, name, speciality)
+                    self.teachers.append(teacher)
                 # Load courses
-                self.courses = [Course(**course) for course in data.get("courses", [])]
+                for course_data in data.get("courses", []):
+                    course_id = course_data.get("id")
+                    name = course_data.get("name")
+                    instrument = course_data.get("instrument")
+                    teacher_id = course_data.get("teacher_id")
+                    course = Course(course_id, name, instrument, teacher_id)
+                    course.enrolled_student_ids = course_data.get("enrolled_student_ids", [])
+                    course.lessons = course_data.get("lessons", [])
+                    self.courses.append(course)
 
                 # Correctly load the attendance log.
                 # Use .get() with a default empty list to prevent errors if the key doesn't exist.
