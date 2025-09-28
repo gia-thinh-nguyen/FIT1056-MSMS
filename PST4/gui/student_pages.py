@@ -18,12 +18,12 @@ def show_student_management_page(manager):
         
         if submitted:
             # This call now works because we implemented the method in PST3.
-            # TODO: Add a check for blank name/instrument.
+            # Add a check for blank name/instrument.
             if reg_name and reg_instrument:
                 new_student = manager.register_new_student(reg_name, reg_instrument)
                 if new_student:
                     st.success(f"Successfully registered {reg_name}!")
-                    # You can use st.balloons() for extra flair.
+                    st.balloons()
                 else:
                     st.error(f"Could not register student. A teacher for {reg_instrument} might not be available.")
             else:
