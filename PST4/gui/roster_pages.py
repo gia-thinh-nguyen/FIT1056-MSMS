@@ -9,7 +9,33 @@ def show_roster_page(manager):
     # --- View Roster Section (remains the same) ---
     day = st.selectbox("Select a day", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
     # ... (code to display the dataframe) ...
+    roster_data = []
+    for course in manager.courses:
+        for lesson in course.lessons:
+            if lesson["day"] == day:
+                # Get teacher name
+                teacher = next((t for t in manager.teachers if t.id == course.teacher_id), None)
+                teacher_name = teacher.name if teacher else "Unknown"
+                
+                # Get enrolled students for this course
+                enrolled_students = [s.name for s in manager.students if course.id in s.enrolled_course_ids]
+                
+                roster_data.append({
+                    "Time": lesson["start_time"],
+                    "Course": course.name,
+                    "Instrument": course.instrument,
+                    "Teacher": teacher_name,
+                    "Room": lesson["room"],
+                    "Students": ", ".join(enrolled_students) if enrolled_students else "No students enrolled"
+                })
     
+    if roster_data:
+        # Create and display the DataFrame
+        df = pd.DataFrame(roster_data)
+        df = df.sort_values("Time")  # Sort by time
+        st.dataframe(df, use_container_width=True)
+    else:
+        st.info(f"No lessons scheduled for {day}")
     # --- Student Check-in Section (now works correctly) ---
     st.subheader("Student Check-in")
     with st.form("check_in_form"):
