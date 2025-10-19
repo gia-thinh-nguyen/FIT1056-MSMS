@@ -5,6 +5,8 @@ from gui.student_pages import show_student_management_page
 from gui.roster_pages import show_roster_page
 from gui.finance_pages import show_finance_page
 
+from app.admin_utils import init_logger, backup_data
+
 def launch():
     """Sets up the main Streamlit application window and navigation."""
     st.set_page_config(layout="wide", page_title="Music School Management System")
@@ -12,6 +14,8 @@ def launch():
     # Instantiate the "brain" of our app ONCE and store it in the session state.
     # This is crucial so the manager object persists as we switch pages.
     if 'manager' not in st.session_state:
+        init_logger()
+        backup_data()
         st.session_state.manager = ScheduleManager()
 
     st.sidebar.title("MSMS Navigation")

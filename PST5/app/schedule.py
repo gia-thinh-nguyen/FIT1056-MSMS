@@ -4,6 +4,7 @@ from app.student import StudentUser
 from app.teacher import TeacherUser, Course
 import csv
 import datetime
+import logging # Import the logging module
 class ScheduleManager:
     """The main controller for all business logic and data handling."""
     def __init__(self, data_path="data/msms.json"):
@@ -121,6 +122,7 @@ class ScheduleManager:
         # Append the record to self.finance_log and save the data.
         self.finance_log.append(payment_record)
         self._save_data()
+        logging.info(f"Payment of {amount} recorded for student ID {student_id}.")
         print(f"Payment of {amount} for student {student_id} recorded.")
 
     def get_payment_history(self, student_id):
