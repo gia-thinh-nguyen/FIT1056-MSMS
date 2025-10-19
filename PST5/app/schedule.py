@@ -131,6 +131,26 @@ class ScheduleManager:
         # and return only the records that match the student_id.
         return [p for p in self.finance_log if p['student_id'] == student_id]
 
+    def create_course(self, name, instrument, teacher_id):
+        """Creates a new course and adds it to the courses list."""
+        # Create a new course with the next available course ID
+        course_id = self.next_course_id
+        new_course = Course(course_id, name, instrument, teacher_id)
+        
+        # Add the course to the courses list
+        self.courses.append(new_course)
+        
+        # Increment the next_course_id counter
+        self.next_course_id += 1
+        
+        # Save the data to persist changes
+        self._save_data()
+        
+        logging.info(f"Course '{name}' created with ID {course_id}.")
+        print(f"Course '{name}' created successfully with ID {course_id}.")
+        
+        return new_course
+
     def export_report(self, kind, out_path):
         """Exports a log to a CSV file."""
         print(f"Exporting {kind} report to {out_path}...")

@@ -3,6 +3,7 @@ import pytest
 import os
 from app.schedule import ScheduleManager
 
+from app.student import StudentUser
 # A pytest fixture creates a clean environment for each test function.
 @pytest.fixture
 def fresh_manager():
@@ -24,8 +25,9 @@ def test_create_course(fresh_manager):
 def test_record_payment_and_history(fresh_manager):
     # ARRANGE: Add a dummy student to the manager for the test.
     # This test verifies the core financial logic you added in Fragment 5.1.
-    # fresh_manager.students.append(...)
     student_id_to_test = 1
+    test_student = StudentUser(student_id_to_test, "Test Student")
+    fresh_manager.students.append(test_student)
 
     # ACT: Record a payment for that student.
     fresh_manager.record_payment(student_id_to_test, 100.00, "Credit Card")
@@ -39,9 +41,17 @@ def test_record_payment_and_history(fresh_manager):
     assert history[0]['method'] == "Credit Card"
     
 def test_get_payment_history_no_results(fresh_manager):
-    # TODO: Implement a test that checks if get_payment_history
-    # returns an empty list for a student with no payments.
-    pass
+    # ARRANGE: Create a student with no payments recorded.
+    student_id_to_test = 2
+    test_student = StudentUser(student_id_to_test, "Student With No Payments")
+    fresh_manager.students.append(test_student)
+    
+    # ACT: Get the payment history for this student.
+    history = fresh_manager.get_payment_history(student_id_to_test)
+    
+    # ASSERT: Verify that an empty list is returned.
+    assert len(history) == 0
+    assert history == []
 
 # tests/test_schedule_manager.py
 # ... (fixture setup) ...
