@@ -91,22 +91,5 @@
             "course_id": 102,
             "timestamp": "2025-07-14T16:02:45.654321"
         }
-    ],
-    "finance": [
-        {
-            "student_id": 1,
-            "amount": 2.0,
-            "method": "",
-            "timestamp": "2025-10-19T19:14:51.201814"
-        },
-        {
-            "student_id": 2,
-            "amount": 5.0,
-            "method": "Credit Card",
-            "timestamp": "2025-10-19T19:15:15.787215"
-        }
-    ],
-    "next_student_id": 1,
-    "next_teacher_id": 1,
-    "next_course_id": 1
+    ]
 }

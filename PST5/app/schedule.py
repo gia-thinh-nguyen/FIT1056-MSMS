@@ -65,7 +65,7 @@ class ScheduleManager:
         data_to_save = {
             "students": [
                 {
-                    "id": student.user_id,
+                    "id": student.id,
                     "name": student.name,
                     "enrolled_course_ids": student.enrolled_course_ids
                 }
@@ -73,7 +73,7 @@ class ScheduleManager:
             ],
             "teachers": [
                 {
-                    "id": teacher.user_id,
+                    "id": teacher.id,
                     "name": teacher.name,
                     "speciality": teacher.speciality
                 }
@@ -81,7 +81,7 @@ class ScheduleManager:
             ],
             "courses": [
                 {
-                    "id": course.course_id,
+                    "id": course.id,
                     "name": course.name,
                     "instrument": course.instrument,
                     "teacher_id": course.teacher_id,
@@ -105,7 +105,7 @@ class ScheduleManager:
         # Find the student to ensure they exist.
         student_exist = False
         for student in self.students:
-            if student.user_id == student_id:
+            if student.id == student_id:
                 student_exist = True
                 break
         if not student_exist:
